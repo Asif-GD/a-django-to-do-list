@@ -1,2 +1,3 @@
-# a-to-do-list
-To Do List created using Python-Django framework
+# A To Do List
+
+To Do List created using Python-Django framework.

@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect
 
@@ -51,3 +51,9 @@ def login_user(request):
         messages.error(request, "Login failed, invalid username or password.")
     login_form = AuthenticationForm()
     return render(request, template_name="main/login.html", context={"form": login_form}, content_type="text/html")
+
+
+def logout_user(request):
+    logout(request)
+    messages.info(request, "You have successfully logged out.")
+    return redirect("main:home")

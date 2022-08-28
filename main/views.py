@@ -3,13 +3,8 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect
 
-from utils import get_db_handle
-from .forms import RegistrationForm
-
-# setting up local MongoDB connection
-db, db_client = get_db_handle("to_do_db_test")
-print(db.name)
-print(db.list_collection_names())
+from database import create_list
+from .forms import RegistrationForm, ListCreationForm
 
 
 # Create your views here.
@@ -57,3 +52,27 @@ def logout_user(request):
     logout(request)
     messages.info(request, "You have successfully logged out.")
     return redirect("main:home")
+
+
+def user_lists(request):
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            create_list_form = ListCreationForm(request.POST)
+            if create_list_form.is_valid():
+                # tag every list created with the user's username before saving it to the database.
+                username = request.user.get_username()
+                create_list_form.cleaned_data["username"] = str(username)
+                form_data = create_list_form.cleaned_data
+                # print(create_list_form.cleaned_data)
+                # print(form_data)
+                # CRUD Operation from database.py
+                create_list(form_data, username)
+                messages.success(request, "List creation successful.")
+                return redirect("main:user_lists")
+            else:
+                messages.error(request, "Validation failed, please try again.")
+        create_list_form = ListCreationForm()
+        return render(request, template_name="main/lists.html", context={"form": create_list_form},
+                      content_type="text/html")
+    messages.info(request, "Unauthorized access, please login in.")
+    return redirect("main:login_user")

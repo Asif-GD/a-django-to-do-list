@@ -18,3 +18,8 @@ class RegistrationForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
+
+class ListCreationForm(forms.Form):
+    list_name = forms.CharField(label=False, max_length=100,
+                                widget=forms.TextInput(attrs={"placeholder": "Enter your list name"}))

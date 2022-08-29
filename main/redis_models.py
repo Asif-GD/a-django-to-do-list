@@ -13,9 +13,9 @@ class ToDoList(JsonModel):
 
 
 class Task(JsonModel):
-    list_id: str = Field(index=True)
+    list_pk: str = Field(index=True)
     task_name: str
-    complete: Optional[bool] = False
+    task_complete: Optional[bool] = False
 
 
 Migrator().run()

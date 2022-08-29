@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-Tasks
+Lists
 {% endblock %}
 
 {% block content %}
@@ -20,7 +20,7 @@ Tasks
                 <li class="list-group-item">You have no lists, start creating one.</li>
                 {% endfor %}
             </ul>
-            <form method="POST" class="form-group" action="/lists/">
+            <form method="POST" action="#" class="form-group">
                 {% csrf_token %}
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">

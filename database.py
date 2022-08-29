@@ -22,11 +22,11 @@ def create_new_list(username, list_name):
     return new_list
 
 
-def create_new_task(list_id, task_name, complete):
+def create_new_task(list_pk, task_name, task_complete):
     new_task = Task(
-        list_id=str(list_id),
+        list_pk=str(list_pk),
         task_name=str(task_name),
-        complete=bool(complete),
+        task_complete=bool(task_complete),
     )
     new_task.save()
     return new_task
@@ -37,12 +37,17 @@ def find_lists_by_username(username):
     return ToDoList.find(ToDoList.username == str(username)).all()
 
 
-def find_tasks_by_list_id(list_id):
+def find_list_by_pk(pk):
+    return ToDoList.find(ToDoList.pk == pk).all()
+
+
+def find_tasks_by_list_id(list_pk):
     # returns a list of values
-    return Task.find(Task.list_id == str(list_id)).all()
+    return Task.find(Task.list_pk == str(list_pk)).all()
 
 
-'''def add_data(data, collection_name):
+'''
+def add_data(data, collection_name):
     # to ensure that the data is added to the collection that we require.
     # always specify the collection name mongo_db.<collection_name>.insert_one()
     current_collection = mongo_db.get_collection(collection_name)
@@ -51,4 +56,5 @@ def find_tasks_by_list_id(list_id):
 
 def find_user_data(collection_name):
     current_collection = mongo_db.get_collection(collection_name)
-    return current_collection.find()'''
+    return current_collection.find()
+'''

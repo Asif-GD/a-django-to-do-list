@@ -9,32 +9,38 @@ Tasks
 <div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-10">
-            <h1 class="mt-5">Your To Do Lists</h1>
+            <h1 class="mt-2"> List: {{ lists }} </h1>
             <hr class="mt-0 mb-4">
-            {% for document in tasks %}
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">
-                        {% if document.complete == True %}
-                        <input type="checkbox" name="c{{document.task_name}}" value="clicked" checked>
-                        {% else %}
-                        <input type="checkbox" name="c{{document.task_name}}" value="clicked">
-                        {% endif %}
+            <form method="POST" action="#" class="form-group">
+                {% csrf_token %}
+                {% for record in tasks %}
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            {% if record.task_complete == True %}
+                            <input type="checkbox" name="c_{{ record.task_name }}" value="clicked" checked>
+                            {% else %}
+                            <input type="checkbox" name="c_{{ record.task_name }}" value="clicked">
+                            {% endif %}
+                        </div>
                     </div>
+                    <input type="text" name="new_task" value="{{ record.task_name }}" class="form-control">
                 </div>
-                <input type="text" value="{{ document.task_name }}" class="form-control">
+                {% empty %}
+                <ul>
+                    <li class="list-group-item">You have no lists, start creating one.</li>
+                </ul>
                 {% endfor %}
-            </div>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <button type="submit" name="add_new_item" value="add" class="btn btn-success">Add New Task
-                    </button>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <button type="submit" name="add_new_task" value="add" class="btn btn-primary">Add New Task
+                        </button>
+                    </div>
+                    <input type="text" name="new_task" placeholder="add task here">
                 </div>
-                <input type="text" name="new_item" placeholder="add task here">
-            </div>
-            <div>
-                <button type="submit" name="update_list" value="update" class="btn btn-success">Update List</button>
-            </div>
+                <div>
+                    <button type="submit" name="update_list" value="update" class="btn btn-success">Update List</button>
+                </div>
             </form>
         </div>
     </div>

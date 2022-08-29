@@ -3,11 +3,10 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect
 
-from database import redis_db, create_new_list, create_new_task, find_lists_by_username
-from .forms import RegistrationForm, ListCreationForm, TaskCreationForm
-
-
+from database import create_new_list, create_new_task, find_lists_by_username, find_tasks_by_list_id, find_list_by_pk
+from .forms import RegistrationForm, ListCreationForm
 # Create your views here.
+from .redis_models import ToDoList
 
 
 def home(request):
@@ -66,12 +65,38 @@ def user_list(request):
                 return redirect("main:user_list")
             else:
                 messages.error(request, "Validation failed, please try again.")
-        # CRUD Operation from database.py
+        # redis CRUD Operation from database.py
         available_lists = find_lists_by_username(username)
-        print(available_lists)
         create_list_form = ListCreationForm()
         return render(request, template_name="main/lists.html",
-                      context={"form": create_list_form, "lists": available_lists, "username": username},
+                      context={"form": create_list_form, "lists": available_lists},
+                      content_type="text/html")
+    messages.info(request, "Unauthorized access, please login in.")
+    return redirect("main:login_user")
+
+
+def user_task(request, list_pk):
+    current_list = find_tasks_by_list_id(list_pk)
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            if request.POST.get("update_list"):
+                for record in current_list:
+                    if request.POST.get("c_" + str(record.task_name)) == "clicked":
+                        record.update(task_complete=True)
+                    else:
+                        record.update(task_complete=False)
+                    record.save()
+                messages.success(request, "Update successful.")
+            elif request.POST.get("add_new_task"):
+                task_name = request.POST.get("new_task")
+                task_complete = False
+                create_new_task(list_pk=list_pk, task_name=task_name, task_complete=task_complete)
+                messages.success(request, "Task creation successful.")
+
+        # there can be only one list with the pk=list_pk, hence [0].list_name
+        list_name = find_list_by_pk(pk=list_pk)[0].list_name
+        return render(request, template_name="main/tasks.html",
+                      context={"tasks": current_list, "lists": list_name},
                       content_type="text/html")
     messages.info(request, "Unauthorized access, please login in.")
     return redirect("main:login_user")

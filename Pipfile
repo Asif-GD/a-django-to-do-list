@@ -8,6 +8,8 @@ django = "*"
 crispy-bootstrap5 = "*"
 pymongo = {extras = ["gssapi", "snappy", "srv", "tls"], version = "*"}
 dnspython = "*"
+redis-om = "*"
+redis = {extras = ["hiredis"], version = "*"}
 
 [dev-packages]
 

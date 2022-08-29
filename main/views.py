@@ -3,14 +3,14 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect
 
-from database import create_new_list, create_new_task, find_lists_by_username, find_tasks_by_list_id, find_list_by_pk
+from database import create_new_list, create_new_task, find_lists_by_username, find_tasks_by_list_id
 from .forms import RegistrationForm, ListCreationForm
+
+
 # Create your views here.
-from .redis_models import ToDoList
 
 
 def home(request):
-    print(request.META["PATH_INFO"])
     return render(request, template_name="main/home.html", context={}, content_type="text/html")
 
 
@@ -94,9 +94,9 @@ def user_task(request, list_pk):
                 messages.success(request, "Task creation successful.")
 
         # there can be only one list with the pk=list_pk, hence [0].list_name
-        list_name = find_list_by_pk(pk=list_pk)[0].list_name
+        # list_name = find_list_by_pk(pk=list_pk)[0].list_name
         return render(request, template_name="main/tasks.html",
-                      context={"tasks": current_list, "lists": list_name},
+                      context={"tasks": current_list},
                       content_type="text/html")
     messages.info(request, "Unauthorized access, please login in.")
     return redirect("main:login_user")

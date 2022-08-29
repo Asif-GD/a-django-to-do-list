@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-Lists
+Tasks
 {% endblock %}
 
 {% block content %}
@@ -11,11 +11,20 @@ Lists
         <div class="col-10">
             <h1 class="mt-5">Your To Do Lists</h1>
             <hr class="mt-0 mb-4">
+            <ul class="list-group">
+                {% for document in tasks %}
+                <a href="/#{{forloop.counter}}" class="list-group-item list-group-item-action">
+                    {{ document.task_name }}
+                </a>
+                {% empty %}
+                <li class="list-group-item">You have no tasks, start creating one.</li>
+                {% endfor %}
+            </ul>
             <form method="POST" class="form-group">
                 {% csrf_token %}
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <button type="submit" class="btn btn-primary">Create List --></button>
+                        <button type="submit" class="btn btn-primary">Create Task --></button>
                     </div>
                     {{ form }}
                 </div>

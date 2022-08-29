@@ -1,0 +1,42 @@
+{% extends "main/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+Tasks
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-10">
+            <h1 class="mt-5">Your To Do Lists</h1>
+            <hr class="mt-0 mb-4">
+            {% for document in tasks %}
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                        {% if document.complete == True %}
+                        <input type="checkbox" name="c{{document.task_name}}" value="clicked" checked>
+                        {% else %}
+                        <input type="checkbox" name="c{{document.task_name}}" value="clicked">
+                        {% endif %}
+                    </div>
+                </div>
+                <input type="text" value="{{ document.task_name }}" class="form-control">
+                {% endfor %}
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <button type="submit" name="add_new_item" value="add" class="btn btn-success">Add New Task
+                    </button>
+                </div>
+                <input type="text" name="new_item" placeholder="add task here">
+            </div>
+            <div>
+                <button type="submit" name="update_list" value="update" class="btn btn-success">Update List</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

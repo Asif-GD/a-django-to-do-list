@@ -23,3 +23,9 @@ class RegistrationForm(UserCreationForm):
 class ListCreationForm(forms.Form):
     list_name = forms.CharField(label=False, max_length=100,
                                 widget=forms.TextInput(attrs={"placeholder": "Enter your list name"}))
+
+
+class TaskCreationForm(forms.Form):
+    task_name = forms.CharField(label=False, max_length=100,
+                                widget=forms.TextInput(attrs={"placeholder": "Enter your task name"}))
+    task_checkbox = forms.CheckboxInput(check_test=None)

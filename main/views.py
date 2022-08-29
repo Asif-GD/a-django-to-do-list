@@ -3,8 +3,8 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect
 
-from database import create_list
-from .forms import RegistrationForm, ListCreationForm
+from database import db, add_data, find_user_data
+from .forms import RegistrationForm, ListCreationForm, TaskCreationForm
 
 
 # Create your views here.
@@ -54,25 +54,26 @@ def logout_user(request):
     return redirect("main:home")
 
 
-def user_lists(request):
+def user_tasks(request):
     if request.user.is_authenticated:
+        username = request.user.get_username()
         if request.method == "POST":
-            create_list_form = ListCreationForm(request.POST)
-            if create_list_form.is_valid():
-                # tag every list created with the user's username before saving it to the database.
-                username = request.user.get_username()
-                create_list_form.cleaned_data["username"] = str(username)
-                form_data = create_list_form.cleaned_data
-                # print(create_list_form.cleaned_data)
-                # print(form_data)
+            create_task_form = TaskCreationForm(request.POST)
+            if create_task_form.is_valid():
+                # tag every task created with the user's username before saving it to the database.
+                create_task_form.cleaned_data["username"] = str(username)
+                form_data = create_task_form.cleaned_data
                 # CRUD Operation from database.py
-                create_list(form_data, username)
-                messages.success(request, "List creation successful.")
-                return redirect("main:user_lists")
+                add_data(form_data, username)
+                messages.success(request, "Task creation successful.")
+                return redirect("main:user_tasks")
             else:
                 messages.error(request, "Validation failed, please try again.")
-        create_list_form = ListCreationForm()
-        return render(request, template_name="main/lists.html", context={"form": create_list_form},
+        # CRUD Operation from database.py
+        available_tasks = find_user_data(username)
+        create_task_form = TaskCreationForm()
+        return render(request, template_name="main/tasks.html",
+                      context={"form": create_task_form, "tasks": available_tasks, "username": username},
                       content_type="text/html")
     messages.info(request, "Unauthorized access, please login in.")
     return redirect("main:login_user")

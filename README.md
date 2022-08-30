@@ -40,4 +40,10 @@ App Screenshots
 * Upon searching for the user's lists, they are authenticated and all the user's list are retrieved as links. 
 * Accessing the Lists will lead to their individual tasks under them.
 * The links for the lists are generated using their list's primary key.
-<i>note - I plan to implement a slug field to handle this better</i>
+<i>note - This caused errors inorder to access the other URLs, so I have unimplemented (commented out the URL in main/urls.py) it for now.</i>
+
+## How to run it locally?
+
+* Create a Redis-Stack Docker image. I developed the app by connecting to a local instance of a Redis Database, the link explains it better.
+- https://hub.docker.com/r/redis/redis-stack
+* Setup a virtual environment for the project 

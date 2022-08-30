@@ -19,23 +19,21 @@ App Screenshots
 ### /tasks
 ![image](https://user-images.githubusercontent.com/43206308/187316895-82558e7d-e084-41ca-9ff5-f9867ba82c69.png)
 
+## Data Models
+
+1. List Data Model
+  * username: string type -> indexed 
+  * list_name: string type
+
+2. Task Data Model
+  * list_pk: string type -> indexed
+  * task_name: string type
+  * task_complete: Optional boolean type
 
 ## How it works
 
 * The web-app uses SQLite3, the default django database for storing User models. I chose to do this in order to utilize the built-in django modules for User Creation & Authentication.
 * The primary database is Redis with data models implemented using Redis OM in Python.
-
-### Data Models
-
-1. List Data Model
-* username: string type -> indexed 
-* list_name: string type
-
-2. Task Data Model
-* list_pk: string type -> indexed
-* task_name: string type
-* task_complete: Optional boolean type
-
 * The To Do Lists created by the user are tagged to them via their username and can be retrieved, hence the username field is indexed.
 * The Tasks are tagged to the list by retriving the list's primary key and storing it along with the task.
 * The primary key of the list is stored into list_pk inside the Task data model, and that field is indexed.

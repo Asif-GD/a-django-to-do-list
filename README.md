@@ -23,4 +23,16 @@ App Screenshots
 ## How it works
 
 * The web-app uses SQLite3, the default django database for storing User models. I chose to do this in order to utilize the built-in django modules for User Creation & Authentication.
-* 
+* The primary database is Redis with data models implemented using Redis OM in Python.
+
+### Data Models
+
+1. List Data Model
+* username: string type -> indexed 
+* list_name: string type
+
+2. Task Data Model
+* list_pk: string type -> indexed
+* task_name: string type
+* task_complete: Optional boolean type
+

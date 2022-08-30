@@ -36,3 +36,10 @@ App Screenshots
 * task_name: string type
 * task_complete: Optional boolean type
 
+* The To Do Lists created by the user are tagged to them via their username and can be retrieved, hence the username field is indexed.
+* The Tasks are tagged to the list by retriving the list's primary key and storing it along with the task.
+* The primary key of the list is stored into list_pk inside the Task data model, and that field is indexed.
+* Upon searching for the user's lists, they are authenticated and all the user's list are retrieved as links. 
+* Accessing the Lists will lead to their individual tasks under them.
+* The links for the lists are generated using their list's primary key.
+Note - I plan to implement a slug field to handle this better

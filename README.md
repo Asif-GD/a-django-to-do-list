@@ -40,4 +40,4 @@ App Screenshots
 * Upon searching for the user's lists, they are authenticated and all the user's list are retrieved as links. 
 * Accessing the Lists will lead to their individual tasks under them.
 * The links for the lists are generated using their list's primary key.
-Note - I plan to implement a slug field to handle this better
+<i>note - I plan to implement a slug field to handle this better</i>

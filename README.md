@@ -22,13 +22,13 @@ App Screenshots
 ## Data Models
 
 1. List Data Model
-  * username: string type -> indexed 
-  * list_name: string type
+   * username: string type -> indexed 
+   * list_name: string type
 
 2. Task Data Model
-  * list_pk: string type -> indexed
-  * task_name: string type
-  * task_complete: Optional boolean type
+   * list_pk: string type -> indexed
+   * task_name: string type
+   * task_complete: Optional boolean type
 
 ## How it works
 
@@ -45,7 +45,7 @@ App Screenshots
 ## How to run it locally?
 
 * Create a Redis-Stack Docker image. I developed the app by connecting to a local instance of a Redis Database, the link explains it better.
-- https://hub.docker.com/r/redis/redis-stack
+  - https://hub.docker.com/r/redis/redis-stack
 * Setup a virtual environment for the project using pipenv, and activate it.
 * Clone the repository
 * The necessary packages should be installed automatically using the information from the PipFile

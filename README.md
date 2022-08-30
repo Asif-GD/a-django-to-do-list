@@ -22,4 +22,5 @@ App Screenshots
 
 ## How it works
 
-The web-app uses 
+* The web-app uses SQLite3, the default django database for storing User models. I chose to do this in order to utilize the built-in django modules for User Creation & Authentication.
+* 

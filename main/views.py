@@ -3,7 +3,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect
 
-from database import create_new_list, create_new_task, find_lists_by_username, find_tasks_by_list_id
+from database import create_new_list, create_new_task, find_lists_by_username, find_tasks_by_list_pk, find_list_by_pk
 from .forms import RegistrationForm, ListCreationForm
 
 
@@ -75,8 +75,8 @@ def user_list(request):
     return redirect("main:login_user")
 
 
-def user_task(request, list_pk):
-    current_list = find_tasks_by_list_id(list_pk)
+def user_task(request, username, list_pk):
+    current_list = find_tasks_by_list_pk(list_pk)
     if request.user.is_authenticated:
         if request.method == "POST":
             if request.POST.get("update_list"):
@@ -90,13 +90,15 @@ def user_task(request, list_pk):
             elif request.POST.get("add_new_task"):
                 task_name = request.POST.get("new_task")
                 task_complete = False
+                # redis CRUD Operation from database.py
                 create_new_task(list_pk=list_pk, task_name=task_name, task_complete=task_complete)
                 messages.success(request, "Task creation successful.")
+                return redirect(f"/{username}/{list_pk}")
 
         # there can be only one list with the pk=list_pk, hence [0].list_name
-        # list_name = find_list_by_pk(pk=list_pk)[0].list_name
+        list_name = find_list_by_pk(pk=list_pk)[0].list_name
         return render(request, template_name="main/tasks.html",
-                      context={"tasks": current_list},
+                      context={"tasks": current_list, "list_name": list_name},
                       content_type="text/html")
     messages.info(request, "Unauthorized access, please login in.")
     return redirect("main:login_user")

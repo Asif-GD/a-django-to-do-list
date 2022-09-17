@@ -9,7 +9,7 @@ Tasks
 <div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-10">
-            <h1 class="mt-2"> List: {{ lists }} </h1>
+            <h1 class="mt-2"> List: {{ list_name }} </h1>
             <hr class="mt-0 mb-4">
             <form method="POST" action="#" class="form-group">
                 {% csrf_token %}
@@ -28,7 +28,7 @@ Tasks
                 </div>
                 {% empty %}
                 <ul>
-                    <li class="list-group-item">You have no lists, start creating one.</li>
+                    <li class="list-group-item">You have no tasks, start creating one.</li>
                 </ul>
                 {% endfor %}
                 <div class="input-group mb-3">

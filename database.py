@@ -41,7 +41,7 @@ def find_list_by_pk(pk):
     return ToDoList.find(ToDoList.pk == pk).all()
 
 
-def find_tasks_by_list_id(list_pk):
+def find_tasks_by_list_pk(list_pk):
     # returns a list of values
     return Task.find(Task.list_pk == str(list_pk)).all()
 

@@ -13,7 +13,7 @@ Lists
             <hr class="mt-0 mb-4">
             <ul class="list-group">
                 {% for record in lists %}
-                <a href="/{{record.pk}}" class="list-group-item list-group-item-action">
+                <a href="/{{record.username}}/{{record.pk}}" class="list-group-item list-group-item-action">
                     {{ record.list_name }}
                 </a>
                 {% empty %}

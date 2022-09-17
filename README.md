@@ -2,7 +2,7 @@
 
 A "To Do List" web-app created using Python-Django framework, and Redis as a primary database using Redis OM for Python.
 
-App Screenshots
+## App Screenshots
 
 ### /home
 ![image](https://user-images.githubusercontent.com/43206308/187314705-8297d17d-59ef-4af6-8d36-6e0d68e5ab66.png)
